@@ -1,3 +1,3 @@
-module github.com/Iowel/server-test
+module github.com/Iowel/test-servers
 
 go 1.24.1
