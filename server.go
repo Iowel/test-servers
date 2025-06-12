@@ -10,7 +10,7 @@ import (
 	"sync"
 )
 
-func StartingServer(port string) {
+func StartingServer(port, path, text string) {
 	var wg sync.WaitGroup
 
 	for i := 0; i < 15; i++ {
@@ -19,8 +19,8 @@ func StartingServer(port string) {
 		go func() {
 			defer wg.Done()
 			router := http.NewServeMux()
-			router.HandleFunc("GET /hello", func(w http.ResponseWriter, r *http.Request) {
-				w.Write([]byte("Hello World!"))
+			router.HandleFunc("GET "+path, func(w http.ResponseWriter, r *http.Request) {
+				w.Write([]byte(text))
 
 			})
 			server := &http.Server{
@@ -57,11 +57,11 @@ func StartingServer(port string) {
 
 	}
 
-	log.Printf("Сервер запущен на порту: %s", port)
+	log.Printf("Сервер запущен на порту: %s и доступен по адресу http://localhost:%s/%s", port, port, path)
 
 	wg.Wait()
 }
 
 // func main() {
-// 	StartingServer("8080")
+// 	StartingServer("8080", "/hello", "Hello World")
 // }
